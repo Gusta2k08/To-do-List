@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexa | Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="ph-fill ph-hexagon"></i>
+                <h2>Nexa</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="active"><i class="ph ph-check-square-offset"></i> Tarefas</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-content">
+                    <div>
+                        <h1>Meu Dashboard</h1>
+                        <p class="subtitle">Gerencie suas atividades com eficiência.</p>
+                    </div>
+                    <button id="themeToggle" class="theme-toggle" title="Alternar modo escuro">
+                        <i class="ph ph-moon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <section class="task-input-section">
+                <form id="taskForm" class="input-group">
+                    <input type="text" id="taskInput" placeholder="O que precisa ser feito na Nexa hoje?" required maxlength="60">
+                    <input type="date" id="taskDate" required>
+                    <select id="prioritySelect" required>
+                        <option value="" disabled selected>Prioridade</option>
+                        <option value="alta">Alta (Laranja)</option>
+                        <option value="media">Média (Roxa)</option>
+                        <option value="baixa">Baixa (Cinza)</option>
+                    </select>
+                    <button type="submit" id="addBtn">
+                        <i class="ph ph-plus-circle"></i> Adicionar
+                    </button>
+                </form>
+            </section>
+
+            <section class="task-board">
+                <div class="board-header">
+                    <div class="filters">
+                        <button class="filter-btn active" data-filter="all">Todas</button>
+                        <button class="filter-btn" data-filter="pending">Pendentes</button>
+                        <button class="filter-btn" data-filter="completed">Concluídas</button>
+                    </div>
+                    <div class="task-stats">
+                        <span id="taskCounter">0</span> tarefas encontradas
+                    </div>
+                </div>
+
+                <ul id="taskList" class="task-list">
+                    </ul>
+            </section>
+        </main>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Modal de Edição -->
+    <div id="editModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Tarefa</h2>
+                <button type="button" class="modal-close" onclick="closeEditModal()">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+            <form id="editForm" class="modal-form">
+                <div class="form-group">
+                    <label for="editTaskInput">Tarefa</label>
+                    <input type="text" id="editTaskInput" required maxlength="60">
+                </div>
+                <div class="form-group">
+                    <label for="editTaskDate">Data</label>
+                    <input type="date" id="editTaskDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPrioritySelect">Prioridade</label>
+                    <select id="editPrioritySelect" required>
+                        <option value="alta">Alta (Laranja)</option>
+                        <option value="media">Média (Roxa)</option>
+                        <option value="baixa">Baixa (Cinza)</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-save">Salvar Alterações</button>
+                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
