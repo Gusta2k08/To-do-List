@@ -26,15 +26,25 @@
                         <h1>Meu Dashboard</h1>
                         <p class="subtitle">Gerencie suas atividades com eficiência.</p>
                     </div>
-                    <button id="themeToggle" class="theme-toggle" title="Alternar modo escuro">
-                        <i class="ph ph-moon"></i>
-                    </button>
+                    <div class="header-actions">
+                        <div class="theme-selector">
+                            <label for="accentSelect">Cor</label>
+                            <select id="accentSelect" title="Escolher cor do tema">
+                                <option value="purple">Padrão</option>
+                                <option value="orange">Laranja</option>
+                                <option value="green">Verde</option>
+                            </select>
+                        </div>
+                        <button id="themeToggle" class="theme-toggle" title="Alternar modo escuro">
+                            <i class="ph ph-moon"></i>
+                        </button>
+                    </div>
                 </div>
             </header>
 
             <section class="task-input-section">
                 <form id="taskForm" class="input-group">
-                    <input type="text" id="taskInput" placeholder="O que precisa ser feito na Nexa hoje?" required maxlength="60">
+                    <input type="text" id="taskInput" placeholder="O que precisa ser feito na Nexa hoje?" required maxlength="60" autocomplete="off">
                     <input type="date" id="taskDate" required>
                     <select id="prioritySelect" required>
                         <option value="" disabled selected>Prioridade</option>
@@ -42,6 +52,14 @@
                         <option value="media">Média (Roxa)</option>
                         <option value="baixa">Baixa (Cinza)</option>
                     </select>
+                    <select id="categorySelect" required>
+                        <option value="" disabled selected>Categoria</option>
+                        <option value="Trabalho">Trabalho</option>
+                        <option value="Pessoal">Pessoal</option>
+                        <option value="Estudos">Estudos</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                    <textarea id="subtaskInput" placeholder="Subtarefas separadas por vírgula (opcional)" rows="1"></textarea>
                     <button type="submit" id="addBtn">
                         <i class="ph ph-plus-circle"></i> Adicionar
                     </button>
@@ -60,8 +78,30 @@
                     </div>
                 </div>
 
-                <ul id="taskList" class="task-list">
-                    </ul>
+                <div class="task-controls">
+                    <input type="search" id="searchInput" placeholder="Buscar tarefas, categoria ou data..." autocomplete="off">
+                    <select id="sortSelect" title="Ordenar tarefas">
+                        <option value="dateAsc">Data mais próxima</option>
+                        <option value="dateDesc">Data mais distante</option>
+                        <option value="priorityHigh">Prioridade alta</option>
+                        <option value="priorityLow">Prioridade baixa</option>
+                        <option value="createdNewest">Adicionadas recentemente</option>
+                    </select>
+                    <button type="button" id="clearCompletedBtn" class="secondary">Limpar concluídas</button>
+                    <button type="button" id="exportBtn" class="secondary">Exportar JSON</button>
+                    <button type="button" id="importBtn" class="secondary">Importar JSON</button>
+                    <input type="file" id="importInput" accept="application/json" hidden>
+                </div>
+
+                <div class="progress-group">
+                    <div class="progress-text">
+                        <span id="progressText">0 de 0 tarefas concluídas</span>
+                        <span id="progressStatus">Sem tarefas no momento</span>
+                    </div>
+                    <progress id="progressBar" value="0" max="100"></progress>
+                </div>
+
+                <ul id="taskList" class="task-list"></ul>
             </section>
         </main>
     </div>
@@ -73,7 +113,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Editar Tarefa</h2>
-                <button type="button" class="modal-close" onclick="closeEditModal()">
+                <button type="button" class="modal-close">
                     <i class="ph ph-x"></i>
                 </button>
             </div>
@@ -94,9 +134,22 @@
                         <option value="baixa">Baixa (Cinza)</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="editCategorySelect">Categoria</label>
+                    <select id="editCategorySelect" required>
+                        <option value="Trabalho">Trabalho</option>
+                        <option value="Pessoal">Pessoal</option>
+                        <option value="Estudos">Estudos</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editSubtaskInput">Subtarefas</label>
+                    <textarea id="editSubtaskInput" rows="2" placeholder="Subtarefas separadas por vírgula"></textarea>
+                </div>
                 <div class="modal-actions">
                     <button type="submit" class="btn-save">Salvar Alterações</button>
-                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancelar</button>
+                    <button type="button" class="btn-cancel">Cancelar</button>
                 </div>
             </form>
         </div>
